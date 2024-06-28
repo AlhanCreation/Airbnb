@@ -1,30 +1,87 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Wanderlust</title>
-</head>
-<body>
-  
-	<h3>Create new listings:</h3>
 
-	<form method="POST" action="/listings" >
-		<input type="text" name="listing[title]" id="title" placeholder="Give title">
-		<br><br>
-		<textarea name="listing[description]" id="deccription" cols="30" rows="10" placeholder="Give deccription"></textarea>
-		<br><br>
-		<input type="text" name="listing[image]" id="image" placeholder="Enter image link!">
-		<br><br>
-		<input type="text" name="listing[price]" id="price" placeholder="Enter price">
-		<br><br>
-		<input type="text" name="listing[location]" id="location" placeholder="Enter location">
-		<br><br>
-		<input type="text" name="listing[country]" id="country" placeholder="Enter country">
-		<br><br>
-		<button>ADD</button>	
-	</form>
+<body>
+	<% layout("layouts/boilerplate.ejs") %>
+	<!-- <h3>Create new listings:</h3> -->
+	
+	<div class="row">
+		<div class="col-8 offset-2">
+			<form method="POST" action="/listings" class="needs-validation" novalidate>
+				<div class="mb-3">
+					<label for="title" class="form-label">Enter Title: <span class="text-danger">*</span></label>
+					<input type="text" name="listing[title]" id="title" placeholder="Give catchy title" class="form-control" required>
+					<div class="valid-feedback">
+						Looks good!
+					</div>
+					<div class="invalid-feedback">
+						Please provide a title.
+					</div>
+				</div>
+				
+				<div class="mb-3">
+					<label for="description" class="form-label">Enter description: <span class="text-danger">*</span></label>
+					<textarea name="listing[description]" id="description" cols="30" rows="10" placeholder="Write description" class="form-control" required></textarea>
+					<div class="valid-feedback">
+						Looks good!
+					</div>
+					<div class="invalid-feedback">
+						Please provide a description.
+					</div>
+				</div>
+		
+				<div class="mb-3">
+					<label for="price" class="form-label">Enter price: <span class="text-danger">*</span></label>
+					<input type="text" name="listing[price]" id="price" placeholder="1,200" class="form-control" required>
+					<div class="valid-feedback">
+						Looks good!
+					</div>
+					<div class="invalid-feedback">
+						Please provide a price.
+					</div>
+				</div>
+				
+				<div class="row mb-3">
+					<div class="col-md-4">
+						<label for="location" class="form-label">Enter location:</label>
+						<input type="text" name="listing[location]" id="location" placeholder="Maharastra, Nagpur" class="form-control" required>
+						<div class="valid-feedback">
+							Looks good!
+						</div>
+						<div class="invalid-feedback">
+							Please provide a location.
+						</div>
+					</div>
+					<div class="col-md-8">
+						<label for="country" class="form-label">Enter country:</label>
+						<input type="text" name="listing[country]" id="country" placeholder="India" class="form-control" required>
+						<div class="valid-feedback">
+							Looks good!
+						</div>
+						<div class="invalid-feedback">
+							Please provide a country.
+						</div>
+					</div>
+				</div>
+	
+				<div class="mb-3">
+					<label for="image" class="form-label">Enter image URL/Link:</label>
+					<input type="text" name="listing[image]" id="image" placeholder="https://" class="form-control">
+					<div class="valid-feedback">
+						Looks good!
+					</div>
+					<div class="invalid-feedback">
+						Please provide an image URL.
+					</div>
+				</div>
+				
+				<div class="d-flex justify-content-center">
+					<button type="submit" class="btn btn-primary mb-3 large-button">Create new listing</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	
+
+	
 	 
 
 </body>
-</html>

@@ -1,0 +1,161 @@
+form{
+    padding: 1.5rem;
+    margin: 1rem;
+    border-radius: 5px;
+    /* background-color: rgb(237, 234, 230); */
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    /* font-family: 'Roboto', sans-serif !important; */
+
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+}
+
+main{
+    flex: 1;
+}
+
+/* Header navigations */
+.navbar{
+    height: 5rem;
+    background-color: white;
+}
+
+.fa-compass-drafting{
+    color: #fe424d;
+    font-size: 1.5rem;
+}
+
+.nav-link{
+    color: #222222 !important;
+}
+
+  /* Footer */
+
+.f-info-links a{
+  text-decoration: none;
+  color: #222222;
+}
+
+.f-info-links a:hover{
+    text-decoration: underline;
+}
+
+.f-info {
+    text-align: center;
+    display: flex;
+    height: 8rem;
+    background-color: #ebebeb;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: space-evenly;
+}
+
+.f-info-links,.f-info-socials,.f-info-brand{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.f-info-socials i{
+    margin-right: 1rem;
+    font-size: 1.3rem;
+}
+
+/* cards */
+
+.card{
+    border: none !important;
+    margin-bottom: 2rem;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:not(.no-hover):hover{
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 1rem;
+}
+
+.card-img-top{
+    border-radius: 1rem !important;
+    width: 100% !important;
+    object-fit: cover !important;
+}
+
+.card-body{
+    padding: 0 !important;
+}
+
+.card-text p{
+    font-weight: 400;
+}
+.row a{
+    text-decoration: none !important;
+}
+
+/* new form  */
+
+
+.form-label{
+    font-weight: 600;
+}
+
+.large-button {
+    background-color: #fe424d !important;
+    border: none !important;
+    width: 100%; /* Make button width 100% of the container */
+    max-width: 200px; /* Set maximum width */
+    font-size: 1.2rem; /* Increase font size */
+    padding: 0.75rem 1.25rem; /* Add padding */
+    margin-top: 4px;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Add transition for hover effect */
+}
+
+.large-button:hover {
+    background-color: #fe424d !important; /* Change background color on hover */
+    transform: scale(1.05); /* Slightly increase the size on hover */
+}
+
+
+/* show  */
+
+.show-image{
+    height: 30vh;
+}
+
+.btns{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.btn-edit{
+   background-color: #fe424d !important;
+   border: none;
+   width: 100px !important;
+}
+
+.no-hover {
+    transition: none;
+}
+
+/* Styling for the card's paragraph content */
+.card-text {
+    line-height: 2;
+    margin-bottom: .5rem;
+}
+
+/* Additional styling for the card */
+.card-body h5 {
+    margin-bottom: 0.5rem;
+}

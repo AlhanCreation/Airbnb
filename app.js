@@ -126,3 +126,10 @@ app.delete("/listings/:id", async(req,res)=>{
 //   });
   
 //**************************************************************************** */
+
+// requiring ejs- mate
+const ejs_mate = require("ejs-mate");
+
+// defining engine for ejs as ejs mate  , // Set 'ejs-mate' as the engine for .ejs files
+app.engine("ejs",ejs_mate);
+
