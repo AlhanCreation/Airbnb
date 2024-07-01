@@ -159,3 +159,12 @@ main{
 .card-body h5 {
     margin-bottom: 0.5rem;
 }
+
+/* // error.ejs
+ */
+
+ .btn-close{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+ }
