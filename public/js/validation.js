@@ -17,3 +17,19 @@
 	  }, false)
 	})
   })();
+
+
+  // event to  hide the reviews-header(h4 tag) until 1st review card dint exists
+  document.addEventListener("DOMContentLoaded", function() {
+    const reviewsContainer = document.querySelector('.reviews-container');
+    const reviewsHeader = document.getElementById('reviews-header');
+	const reviewHr = document.getElementById('review-hr')
+    // Check if there are any review cards
+    if (reviewsContainer.querySelector('.review-card')) {
+        reviewsHeader.style.display = 'block';
+		reviewHr.style.display = 'block';
+    } else {
+        reviewsHeader.style.display = 'none';
+		reviewHr.style.display = 'none';
+    }
+});

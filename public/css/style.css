@@ -1,5 +1,5 @@
 form{
-    padding: 1.5rem;
+
     margin: 1rem;
     border-radius: 5px;
     /* background-color: rgb(237, 234, 230); */
@@ -9,8 +9,8 @@ body{
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    overflow-x: hidden !important; /* Prevent horizontal scrolling */
     /* font-family: 'Roboto', sans-serif !important; */
-
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -130,7 +130,7 @@ main{
 /* show  */
 
 .show-image{
-    height: 30vh;
+    height: 40vh;
 }
 
 .btns{
@@ -168,3 +168,73 @@ main{
     justify-content: flex-end;
     align-items: center;
  }
+
+ /* review-section */
+
+h4 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.reviews-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-around;
+}
+
+.review-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    padding-bottom: 40px; /* Extra padding for delete button */
+    position: relative; /* For positioning delete button */
+    width: calc(33.333% - 20px); /* Adjust width for three cards per row */
+    min-width: 250px; /* Ensure cards don't get too narrow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.review-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.stars {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.star {
+    font-size: 24px;
+    color: #ddd;
+    margin-right: 4px;
+}
+
+.star.filled {
+    color: #f39c12;
+}
+
+.comment {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.delete-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 25%;
+    padding: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.delete-btn:hover {
+    background-color: #c0392b;
+}

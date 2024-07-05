@@ -4,9 +4,11 @@ const mongoose = require("mongoose");
 const path = require("path");
 const methodOverride = require("method-override");
 const Listing = require("./Modules/Listing.js");
+const Review = require("./Modules/Review.js");
 const wrapAsync = require("./utility/wrapAsync.js");
 const ExpressError = require("./utility/ExpressError.js");
-const {listingSchema} = require("./schema.js");
+const { listingSchema, reviewSchema } = require("./schema.js");
+
 
 app.use(express.static(path.join(__dirname, "public")));
 // setting path for views dir
@@ -52,6 +54,17 @@ app.get("/listings", wrapAsync(
 	}
 ));
 
+// Route to delete reviews:
+app.delete("/listings/:id/reviews/:reviewId", wrapAsync(async (req, res) => {
+	const { id, reviewId } = req.params;
+	// This 
+	let r=await Listing.findByIdAndUpdate(id,{$pull:{reviews:reviewId}});
+	// by this review will delete from reviews collection 
+	await Review.findByIdAndDelete(reviewId);
+	res.redirect(`/listings/${id}`);
+	
+}));
+
 // to render new listings form
 app.get("/listings/new", (req, res) => {
 	res.render("listings/newListings.ejs")
@@ -61,37 +74,64 @@ app.get("/listings/new", (req, res) => {
 app.get("/listings/:id", wrapAsync(
 	async (req, res) => {
 		const { id } = req.params;
-		const listing = await Listing.findById(id);
+		const listing = await Listing.findById(id).populate("reviews");
 		res.render("listings/show.ejs", { listing });
 	}
 ));
 
 // Middleware function to validate the schema of the request body
-function validateSchema(req, res, next) {   
-    // Validate the request body against the defined schema
-    let { error } = listingSchema.validate(req.body);
-    if (error) {
-        // If there is an error, throw an ExpressError with status code 400 and the error message
-        throw new ExpressError("400", error);
-    } else {
-        // If validation passes, move to the next middleware or route handler
-        next();
-    }
+function validateListing(req, res, next) {
+	// Validate the request body against the defined schema
+	let { error } = listingSchema.validate(req.body);
+	if (error) {
+		// If there is an error, throw an ExpressError with status code 400 and the error message
+		throw new ExpressError("400", error);
+	} else {
+		// If validation passes, move to the next middleware or route handler
+		next();
+	}
+}
+// Middleware function to validate the reviewSchema of the request body
+function validateReview(req, res, next) {
+	// Validate the request body against the defined schema
+	let { error } = reviewSchema.validate(req.body);
+	if (error) {
+		// If there is an error, thro w an ExpressError with status code 400 and the error message
+		throw new ExpressError("400", error);
+	} else {
+		// If validation passes, move to the next middleware or route handler
+		next();
+	}
 }
 
+
 // Route for creating new listings ***************************
-app.post("/listings", validateSchema, wrapAsync(
-    async (req, res) => {
-        // Extract the listing data from the request body
-        const data = req.body.listing;
-        // Create a new Listing instance with the extracted data
-        const newlisting = new Listing(data);
-        // Save the new listing to the database
-        await newlisting.save();
-        // Redirect the client to the /listings route after saving
-        res.redirect("/listings");
-    }
+app.post("/listings", validateListing, wrapAsync(
+	async (req, res) => {
+		// Extract the listing data from the request body
+		const data = req.body.listing;
+		// Create a new Listing instance with the extracted data
+		const newlisting = new Listing(data);
+		// Save the new listing to the database
+		await newlisting.save();
+		// Redirect the client to the /listings route after saving
+		res.redirect("/listings");
+	}
 ));
+
+// post rout for uploding data into the Reviews model
+app.post("/listings/:id/reviews", validateReview, wrapAsync(
+	async (req, res) => {
+
+		const listing = await Listing.findById(req.params.id);
+		const newReview = new Review(req.body.review);
+
+		await listing.reviews.push(newReview);
+		await newReview.save();
+		await listing.save();
+
+		res.redirect(`/listings/${listing.id}`);
+	}));
 
 // edit rout request to render edit from 
 app.get("/listings/:id/edit", wrapAsync(
@@ -120,7 +160,7 @@ app.delete("/listings/:id", wrapAsync(
 		const deletedListing = await Listing.findByIdAndDelete(id);
 		console.log(deletedListing);
 		res.redirect("/listings");
-	
+
 	}
 ));
 // //chat gpt way 
@@ -145,7 +185,6 @@ app.delete("/listings/:id", wrapAsync(
 
 // requiring ejs- mate
 const ejs_mate = require("ejs-mate");
-const { error } = require("console");
 
 
 // defining engine for ejs as ejs mate  , // Set 'ejs-mate' as the engine for .ejs files
