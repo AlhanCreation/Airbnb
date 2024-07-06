@@ -1,6 +1,5 @@
 form{
-
-    margin: 1rem;
+   margin: .5rem;
     border-radius: 5px;
     /* background-color: rgb(237, 234, 230); */
 }
@@ -65,7 +64,6 @@ main{
 }
 
 .f-info-socials i{
-    margin-right: 1rem;
     font-size: 1.3rem;
 }
 
@@ -143,10 +141,21 @@ main{
    background-color: #fe424d !important;
    border: none;
    width: 100px !important;
+   padding: top 0.3rem ;
+   padding-right: 1rem;
+   padding-left: 1rem;
+   padding-bottom:.4rem ;
+   font-size: medium;
+   font-weight: 500;
 }
 
 .no-hover {
     transition: none;
+}
+
+#delete{
+    font-size: smaller;
+    margin: 1rem;
 }
 
 /* Styling for the card's paragraph content */
@@ -222,7 +231,7 @@ h4 {
 }
 
 .delete-btn {
-    background-color: #e74c3c;
+    background-color: #fe424d;
     color: white;
     border: none;
     border-radius: 25%;
