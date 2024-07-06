@@ -43,7 +43,7 @@ router.get("/:id", wrapAsync(
 
 
 // Route for creating new listings ***************************
-router.post("/listings", validateListing, wrapAsync(
+router.post("/", validateListing, wrapAsync(
 	async (req, res) => {
 		// Extract the listing data from the request body
 		const data = req.body.listing;

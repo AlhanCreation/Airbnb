@@ -59,9 +59,8 @@ app.all("*", (req, res, next) => {
 
 // Golble error handing middleware
 app.use((error, req, res, next) => {
-	let defaultMsg = "Somting went wrong!";
-	let defaultStatus = 500;
-	// res.status(500).send("something went wrong!")
-	let { statusCode = defaultStatus, message = defaultMsg } = error;
-	res.status(statusCode).render("listings/error.ejs", { message })
+    let defaultMessage = "Something went wrong!";
+    let defaultStatus = 500;
+    let { statusCode = defaultStatus, message = defaultMessage } = error;
+    res.status(statusCode).render("listings/error.ejs", { message });
 });
