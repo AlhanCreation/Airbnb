@@ -4,6 +4,9 @@ const mongoose = require("mongoose");
 const path = require("path");
 const methodOverride = require("method-override");
 const ExpressError = require("./utility/ExpressError.js");
+const session = require("express-session");
+const flash = require("connect-flash");
+
 
 const listingsRouts = require("./routs/listings-routs.js");
 const reviewsRouts = require("./routs/reviews-routs.js");
@@ -18,6 +21,16 @@ app.use(express.urlencoded({ extended: true }));
 // Use method-override middleware
 app.use(methodOverride('_method'));
 
+const sessionOption = {
+	secret: 'mysupersecretkey',
+	resave: false,
+	saveUninitialized: true,
+	cookie: {
+		expire: Date.now() + 7 * 24 * 60 * 60 * 1000,
+		maxAge: 7 * 24 * 60 * 60 * 1000,
+		httpOnly: true,
+	}
+};
 
 app.listen(8080, () => {
 	console.log("app is listening at port : 8080");
@@ -38,12 +51,21 @@ async function main() {
 }
 
 
+app.use(session(sessionOption));
+app.use(flash());
+
+app.use((req,res,next)=>{
+	res.locals.success = req.flash("success");
+	res.locals.failuer = req.flash("failuer");
+	next();
+});
+
 app.get("/", (req, res) => {
 	res.render("view.ejs");
 });
 
-app.use("/listings",listingsRouts);
-app.use("/listings/:id/reviews",reviewsRouts);
+app.use("/listings", listingsRouts);
+app.use("/listings/:id/reviews", reviewsRouts);
 
 
 // requiring ejs- mate
@@ -59,8 +81,8 @@ app.all("*", (req, res, next) => {
 
 // Golble error handing middleware
 app.use((error, req, res, next) => {
-    let defaultMessage = "Something went wrong!";
-    let defaultStatus = 500;
-    let { statusCode = defaultStatus, message = defaultMessage } = error;
-    res.status(statusCode).render("listings/error.ejs", { message });
+	let defaultMessage = "Something went wrong!";
+	let defaultStatus = 500;
+	let { statusCode = defaultStatus, message = defaultMessage } = error;
+	res.status(statusCode).render("listings/error.ejs", { message });
 });
