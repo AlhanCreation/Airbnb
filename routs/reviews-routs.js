@@ -5,6 +5,7 @@ const Review = require("../Modules/Review.js");
 const Listing = require("../Modules/Listing.js");
 const wrapAsync = require("../utility/wrapAsync.js");
 const { reviewSchema } = require("../schema.js");
+const { isLogedIn } = require("../middleware.js");
 
 
 
@@ -23,7 +24,7 @@ function validateReview(req, res, next) {
 
 
 // post rout for uploding data into the Reviews model
-router.post("/", validateReview, wrapAsync(
+router.post("/", isLogedIn,validateReview, wrapAsync(
 	async (req, res) => {
 
 		const listing = await Listing.findById(req.params.id);
@@ -38,13 +39,13 @@ router.post("/", validateReview, wrapAsync(
 
 
 	// Route to delete reviews:
-router.delete("/:reviewId", wrapAsync(async (req, res) => {
+router.delete("/:reviewId", isLogedIn,wrapAsync(async (req, res) => {
 	const { id, reviewId } = req.params;
 	// This 
 	await Listing.findByIdAndUpdate(id,{$pull:{reviews:reviewId}});
 	// by this review will delete from reviews collection 
 	await Review.findByIdAndDelete(reviewId);
-	req.flash("failuer","Review deleted!");
+	req.flash("error","Review deleted!");
 	res.redirect(`/listings/${id}`);
 	
 }));

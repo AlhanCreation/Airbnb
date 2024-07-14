@@ -6,10 +6,14 @@ const methodOverride = require("method-override");
 const ExpressError = require("./utility/ExpressError.js");
 const session = require("express-session");
 const flash = require("connect-flash");
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+const User = require("./Modules/user.js")
 
 
-const listingsRouts = require("./routs/listings-routs.js");
-const reviewsRouts = require("./routs/reviews-routs.js");
+const listingsRouter = require("./routs/listings-routs.js");
+const reviewsRouter = require("./routs/reviews-routs.js");
+const userRouter = require("./routs/user-routs.js");
 
 app.use(express.static(path.join(__dirname, "public")));
 // setting path for views dir
@@ -54,9 +58,18 @@ async function main() {
 app.use(session(sessionOption));
 app.use(flash());
 
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 app.use((req,res,next)=>{
 	res.locals.success = req.flash("success");
-	res.locals.failuer = req.flash("failuer");
+	res.locals.failuer = req.flash("error");
+	res.locals.currentUser = req.user;
+
 	next();
 });
 
@@ -64,8 +77,20 @@ app.get("/", (req, res) => {
 	res.render("view.ejs");
 });
 
-app.use("/listings", listingsRouts);
-app.use("/listings/:id/reviews", reviewsRouts);
+// app.get("/demouser",async (req,res)=>{
+// 	let fakeUser = new User(
+// 		{
+// 			email:"fakeuser001@gmail.com",
+// 			username: "alpha-student"
+// 		}
+// 	);
+// 	let registerUser = await User.register(fakeUser,"helloworld");
+// 	res.send(registerUser);
+// });
+
+app.use("/listings", listingsRouter);
+app.use("/listings/:id/reviews", reviewsRouter);
+app.use("/",userRouter);
 
 
 // requiring ejs- mate
