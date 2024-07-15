@@ -25,7 +25,7 @@ const Listing = require("./Modules/Listing.js");
 // });
 
 
-const sampleListings = [
+let sampleListings = [
 	{
 		title: "Cozy Beachfront Cottage",
 		description:
@@ -678,9 +678,11 @@ const sampleListings = [
 
 const initDB = async () => {
 	await Listing.deleteMany({});
+	sampleListings = sampleListings.map((obj)=>({...obj,owner:"6693d177df588b47eef82ad8"}));
 	await Listing.insertMany(sampleListings);
 	const listings = await Listing.find();
     console.log("Fetched listings:");
+	console.log(listings);
   };
 
   initDB();

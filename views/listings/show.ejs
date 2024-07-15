@@ -11,10 +11,10 @@
 				<div class="card no-hover">
 					<img src="<%= listing.image %>" class="card-img-top show-image" alt="listing-image">
 					<div class="card-body">
-						<!-- <h5 class="card-title" style="text-align: center;margin-top: 5px;">
-							
-						</h5> -->
-						<br>
+						<h5 class="card-title" style="text-align: end;margin-top: 1rem;">
+							<p>Crated By: <i><%= listing.owner.username %></i> </p>
+						</h5>
+						
 						<p class="card-text">
 
 							<b>Description: </b><%= listing.description %>
@@ -26,12 +26,20 @@
 
 										<br>
 										<b>Country: </b><%= listing.country %>
+										<!-- <div class="col-1 btns">
+											<a href="/listings/<%= listing._id %>/edit" class="btn btn-edit">Edit</a>
+											<form method="post" action="/listings/<%= listing._id%>?_method=DELETE" style="padding: 0; margin-left: 1rem;">
+												<button id="delete" type="submit" class="btn btn-dark">Delete</button>
+											</form>
+										</div> 	 -->
+										<% if (currentUser && currentUser._id.equals(listing.owner._id)) {%> 
 									<div class="col-1 btns">
 											<a href="/listings/<%= listing._id %>/edit" class="btn btn-edit">Edit</a>
 											<form method="post" action="/listings/<%= listing._id%>?_method=DELETE" style="padding: 0; margin-left: 1rem;">
 												<button id="delete" type="submit" class="btn btn-dark">Delete</button>
 											</form>
-										</div> 									
+										</div> 		
+										<% } %>							
 					</div> 		
 				</div>
 			<hr>

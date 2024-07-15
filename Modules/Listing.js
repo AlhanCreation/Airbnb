@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Review = require("./Review.js");
 const Schema = mongoose.Schema;
-// const Review = require(".Review.js")
+const User = require("./user.js");
 
 const imageSchema = new Schema({
 	filename: {
@@ -57,6 +57,10 @@ const listingSchema = new Schema(
 				ref:"Review" // refrence mai model deyte hain 
 			}
 		],
+		owner:{
+			type:Schema.Types.ObjectId,
+			ref:"User"
+		},
 	}
 );
 
