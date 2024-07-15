@@ -120,7 +120,19 @@ main{
     transition: background-color 0.3s ease, transform 0.3s ease; /* Add transition for hover effect */
 }
 
-.large-button:hover {
+.medium-button {
+    background-color: #fe424d !important;
+    border: none !important;
+    width: 100%; /* Make button width 100% of the container */
+    max-width: 150px; /* Set maximum width for medium button */
+    font-size: 1rem; /* Font size for medium button */
+    padding: 0.5rem 1rem; /* Padding for medium button */
+    margin-top: 4px;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Add transition for hover effect */
+}
+
+
+.large-button:hover,.medium-button:hover {
     background-color: #fe424d !important; /* Change background color on hover */
     transform: scale(1.05); /* Slightly increase the size on hover */
 }

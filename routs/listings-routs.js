@@ -4,7 +4,7 @@ const ExpressError = require("../utility/ExpressError.js");
 const Listing = require("../Modules/Listing.js");
 const wrapAsync = require("../utility/wrapAsync.js");
 const { listingSchema} = require("../schema.js");
-
+const { isLogedIn } = require("../middleware.js");
 
 // Middleware function to validate the schema of the request body
 function validateListing(req, res, next) {
@@ -28,8 +28,8 @@ router.get("/", wrapAsync(
 ));
 
 // to render new listings form
-router.get("/new", (req, res) => {
-	res.render("listings/newListings.ejs")
+router.get("/new",isLogedIn,(req, res) => {
+		res.render("listings/newListings.ejs")	
 });
 
 // Show rout 
@@ -38,7 +38,7 @@ router.get("/:id", wrapAsync(
 		const { id } = req.params;
 		const listing = await Listing.findById(id).populate("reviews");
 		if(!listing){
-			req.flash("failuer","listing not found");
+			req.flash("error","listing not found");
 			res.redirect("/listings");
 		}
 		else{
@@ -49,7 +49,7 @@ router.get("/:id", wrapAsync(
 
 
 // Route for creating new listings ***************************
-router.post("/", validateListing, wrapAsync(
+router.post("/",isLogedIn, validateListing, wrapAsync(
 	async (req, res) => {
 		// Extract the listing data from the request body
 		const data = req.body.listing;
@@ -64,7 +64,7 @@ router.post("/", validateListing, wrapAsync(
 ));
 
 // edit rout request to render edit from 
-router.get("/:id/edit", wrapAsync(
+router.get("/:id/edit",isLogedIn, wrapAsync(
 	async (req, res) => {
 		const { id } = req.params;
 		const listing = await Listing.findById(id);
@@ -78,18 +78,18 @@ router.put("/:id", wrapAsync(
 	async (req, res) => {
 		const { id } = req.params;
 		await Listing.findByIdAndUpdate(id, { ...req.body.listing }); // deconstruction listing[ keys ]
-		req.flash("success","Your lsiting updated!");
+		req.flash("success","Your lsiting updated!"); 
 		res.redirect(`/listings/${id}`);
 	}
 ));
 
 
-// delete rout ( maam way )
-router.delete("/:id", wrapAsync(
+// delete rout
+router.delete("/:id",isLogedIn, wrapAsync(
 	async (req, res) => {
 		const { id } = req.params;
 		const deletedListing = await Listing.findByIdAndDelete(id);
-		req.flash("failuer","Listing has been deleted!");
+		req.flash("error","Listing has been deleted!");
 		console.log(deletedListing);
 		res.redirect("/listings");
 
