@@ -25,7 +25,7 @@ router.post("/signup", wrapAsync(async (req, res) => {
 				 return next(error);
 			}else{
 				console.log(registerUser);
-				req.flash("success", "Wellcome to wanderlust!");
+				req.flash("success",`Hi ${req.user.username}, Wellcome to Wanderlust!`);
 				res.redirect("/listings");
 			}
 		});
@@ -43,8 +43,9 @@ router.get("/login",(req,res)=>{
 router.post("/login",
 		saveRedirect,passport.authenticate("local", { failureRedirect: "/login", failureFlash: true}),
 		async (req, res) => {
-			req.flash("success","Wellcome to Wanderlust!");
+			req.flash("success",`Hi ${req.user.username}, Wellcome to Wanderlust!`);
 			let redirectUrl = res.locals.redirectUrl || "/listings";
+			console.log(redirectUrl);
 			res.redirect(redirectUrl);
 });
 

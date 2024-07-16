@@ -43,10 +43,13 @@
 					</div> 		
 				</div>
 			<hr>
+			<% if(currentUser) {%>
 			<h4>Leave a Review</h4>
+			<% } %>
 			</div>
 
          <!-- reviews --> 
+		 <% if(currentUser) {%>
 			<form action="/listings/<%= listing.id %>/reviews" method="post" class="needs-validation" novalidate>
 				<div class="col-6 offset-2" >
 
@@ -71,9 +74,10 @@
 					</div>
 				</div>
 			</form>
+			<% } %>
 
-			<div class="col-8 offset-2 mb-4">
-				<hr id="review-hr" style="display: none;">
+			<div class="col-8 offset-2 mb-4"> <% if(currentUser) {%>
+				<hr id="review-hr" style="display: none;"> <% } %>
 				<div id="reviews-header" style="display: none;">
 					<h4>All Reviews</h4>
 				</div>
@@ -81,6 +85,7 @@
 				<div class="reviews-container">
 					<% for(let review of listing.reviews) { %>
 						<div class="review-card">
+							<p>@ <%- review.author.username  %></p>
 							<div class="stars">
 								<% for(let i = 0; i < 5; i++) { %>
 									<% if(i < review.rating) { %>
@@ -91,9 +96,11 @@
 								<% } %>
 							</div>
 							<p class="comment"><%= review.comment %></p>
-							<form method="post" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" >
-								<button type="submit" class="delete-btn">Delete</button>
-							</form>
+							<% if(currentUser && currentUser._id.equals(review.author._id) ) { %>
+								<form method="post" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" >
+									<button type="submit" class="delete-btn">Delete</button>
+								</form>
+								<% } %>
 						</div>
 					<% } %>
 				</div>

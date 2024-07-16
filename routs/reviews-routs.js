@@ -5,7 +5,7 @@ const Review = require("../Modules/Review.js");
 const Listing = require("../Modules/Listing.js");
 const wrapAsync = require("../utility/wrapAsync.js");
 const { reviewSchema } = require("../schema.js");
-const { isLogedIn } = require("../middleware.js");
+const { isLogedIn, isReviewAuthor} = require("../middleware.js");
 
 
 
@@ -29,8 +29,9 @@ router.post("/", isLogedIn,validateReview, wrapAsync(
 
 		const listing = await Listing.findById(req.params.id);
 		const newReview = new Review(req.body.review);
-
+		newReview.author = req.user._id;
 		await listing.reviews.push(newReview);
+		console.log(newReview);
 		await newReview.save();
 		await listing.save();
 		req.flash("success","New review added");
@@ -39,8 +40,9 @@ router.post("/", isLogedIn,validateReview, wrapAsync(
 
 
 	// Route to delete reviews:
-router.delete("/:reviewId", isLogedIn,wrapAsync(async (req, res) => {
+	router.delete("/:reviewId", isLogedIn,isReviewAuthor,wrapAsync(async (req, res) => {
 	const { id, reviewId } = req.params;
+	console.log(req.params);	
 	// This 
 	await Listing.findByIdAndUpdate(id,{$pull:{reviews:reviewId}});
 	// by this review will delete from reviews collection 
