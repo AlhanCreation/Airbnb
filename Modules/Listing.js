@@ -3,19 +3,7 @@ const Review = require("./Review.js");
 const Schema = mongoose.Schema;
 const User = require("./user.js");
 
-const imageSchema = new Schema({
-	filename: {
-	  type: String,
-	  default: "listingimage"
-	},
-	url: {
-	  type: String,
-	  default: "https://unsplash.com/photos/a-group-of-flamingos-standing-next-to-each-other-jzbLdt3EncQ",
-	  set: (v) => {
-		return v.trim() === "" ? "https://unsplash.com/photos/a-group-of-flamingos-standing-next-to-each-other-jzbLdt3EncQ" : v;
-	  }
-	}
-  }, { _id: false });
+
 
 const listingSchema = new Schema(
 	{
@@ -29,17 +17,17 @@ const listingSchema = new Schema(
 			required : true,
 		},
 		image:{
-			type:String,
-			default:"https://images.unsplash.com/photo-1718571702272-1b0f9009d97c?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-			set: (v) => 
-				 v === "" ? "https://images.unsplash.com/photo-1718571702272-1b0f9009d97c?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" : v
-			// or 
-			// set: (v) => {
-			// 	return v.trim() === "" ? "https://unsplash.com/photos/a-group-of-flamingos-standing-next-to-each-other-jzbLdt3EncQ" : v;
-			// }
-
-			// type: imageSchema,
-			// default: () => ({})
+			filename: {
+				type: String,
+				default: "listingimage"
+			  },
+			  url: {
+				type: String,
+				default: "https://unsplash.com/photos/a-group-of-flamingos-standing-next-to-each-other-jzbLdt3EncQ",
+				set: (v) => {
+				  return v.trim() === "" ? "https://unsplash.com/photos/a-group-of-flamingos-standing-next-to-each-other-jzbLdt3EncQ" : v;
+				}
+			  }
 	
 		},
 		price:{

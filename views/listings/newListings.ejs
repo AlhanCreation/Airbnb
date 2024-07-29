@@ -5,7 +5,7 @@
 	
 	<div class="row">
 		<div class="col-8 offset-2">
-			<form method="POST" action="/listings" class="needs-validation" novalidate>
+			<form method="POST" action="/listings" class="needs-validation" novalidate enctype="multipart/form-data">
 				<div class="mb-3">
 					<label for="title" class="form-label">Enter Title: <span class="text-danger">*</span></label>
 					<input type="text" name="listing[title]" id="title" placeholder="Give catchy title" class="form-control" required>
@@ -63,8 +63,8 @@
 				</div>
 	
 				<div class="mb-3">
-					<label for="image" class="form-label">Enter image URL/Link:</label>
-					<input type="text" name="listing[image]" id="image" placeholder="https://" class="form-control">
+					<label for="image" class="form-label">Upload Image:</label>
+					<input type="file" name="listing[image]" id="image" placeholder="https://" class="form-control">
 					<div class="valid-feedback">
 						Looks good!
 					</div>
